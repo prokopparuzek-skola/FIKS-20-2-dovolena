@@ -19,7 +19,7 @@ func pair(group [][]int) (pairs []int) {
 		for j := 0; j < len(group); j++ {
 			if block[group[i][j]] == false {
 				block[group[i][j]] = true
-				pairs[i] = j
+				pairs[i] = group[i][j]
 				break
 			}
 		}
@@ -76,6 +76,6 @@ func main() {
 	zWants := pair(relations.zeny)
 	pairs := makePairs(&relations, mWants, zWants)
 	for _, p := range pairs {
-		fmt.Printf("%d + %d\n", p[0], p[1])
+		fmt.Printf("%d + %d\n", p[0]+1, p[1]+1)
 	}
 }
