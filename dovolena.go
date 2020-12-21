@@ -27,6 +27,22 @@ func pair(group [][]int) (pairs []int) {
 	return
 }
 
+func makePairs(relations *peoples, mWants []int, zWants []int) (pairs [][2]int) {
+	pairs = make([][2]int, 0)
+	for i, z := range mWants {
+		if zWants[z] == i {
+			pairs = append(pairs, [2]int{i, z})
+		} else if zWants[z] < i {
+			pairs = append(pairs, [2]int{i, z})
+		} else if relations.muziI[zWants[z]][z] < relations.muziI[zWants[z]][mWants[zWants[z]]] {
+			// SWAP
+		} else {
+			pairs = append(pairs, [2]int{i, z})
+		}
+	}
+	return
+}
+
 func main() {
 	var N int
 	var relations peoples
@@ -41,6 +57,7 @@ func main() {
 		relations.muziI[i] = make(map[int]int)
 		for j := 0; j < N; j++ {
 			fmt.Scan(&relations.muzi[i][j])
+			relations.muzi[i][j]--
 			relations.muziI[i][relations.muzi[i][j]] = j
 		}
 	}
@@ -49,7 +66,14 @@ func main() {
 		relations.zenyI[i] = make(map[int]int)
 		for j := 0; j < N; j++ {
 			fmt.Scan(&relations.zeny[i][j])
+			relations.zeny[i][j]--
 			relations.zenyI[i][relations.zeny[i][j]] = j
 		}
+	}
+	mWants := pair(relations.muzi)
+	zWants := pair(relations.zeny)
+	pairs := makePairs(&relations, mWants, zWants)
+	for _, p := range pairs {
+		fmt.Printf("%d + %d\n", p[0], p[1])
 	}
 }
