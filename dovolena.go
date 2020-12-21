@@ -35,7 +35,9 @@ func makePairs(relations *peoples, mWants []int, zWants []int) (pairs [][2]int) 
 		} else if zWants[z] < i {
 			pairs = append(pairs, [2]int{i, z})
 		} else if relations.muziI[zWants[z]][z] < relations.muziI[zWants[z]][mWants[zWants[z]]] {
-			// SWAP
+			mWants[i] = mWants[zWants[z]]
+			mWants[zWants[z]] = z
+			pairs = append(pairs, [2]int{i, mWants[i]})
 		} else {
 			pairs = append(pairs, [2]int{i, z})
 		}
